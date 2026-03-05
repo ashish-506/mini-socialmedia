@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-zinc-900 text-white min-h-screen">
+    <div class="flex w-full min-h-screen">
+        <!-- Main Content -->
+        <div class="flex-1 flex items-center justify-center p-10">
+            <div class="w-full max-w-md">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold mb-2">Welcome</h1>
+                    <p class="text-zinc-400">Create your account to get started</p>
+                </div>
+
+                <div class="bg-zinc-800 rounded-lg p-8 border border-zinc-700">
+                    <h3 class="text-2xl font-semibold mb-6 text-center">Create Account</h3>
+
+                    <form action="/register" method="post" class="space-y-4">
+                        <div>
+                            <input class="w-full px-4 py-3 outline-none bg-zinc-700 border-2 border-zinc-600 rounded-md focus:border-blue-500 transition-colors placeholder-zinc-400" type="text" placeholder="Username" name="username" required>
+                        </div>
+
+                        <div>
+                            <input class="w-full px-4 py-3 outline-none bg-zinc-700 border-2 border-zinc-600 rounded-md focus:border-blue-500 transition-colors placeholder-zinc-400" type="text" placeholder="Full Name" name="name" required>
+                        </div>
+
+                        <div>
+                            <input class="w-full px-4 py-3 outline-none bg-zinc-700 border-2 border-zinc-600 rounded-md focus:border-blue-500 transition-colors placeholder-zinc-400" type="number" placeholder="Age" name="age" required>
+                        </div>
+
+                        <div>
+                            <input class="w-full px-4 py-3 outline-none bg-zinc-700 border-2 border-zinc-600 rounded-md focus:border-blue-500 transition-colors placeholder-zinc-400" type="email" placeholder="Email" name="email" required>
+                        </div>
+
+                        <div>
+                            <input class="w-full px-4 py-3 outline-none bg-zinc-700 border-2 border-zinc-600 rounded-md focus:border-blue-500 transition-colors placeholder-zinc-400" type="password" placeholder="Password" name="password" required>
+                        </div>
+
+                        <button class="w-full bg-blue-500 hover:bg-blue-600 transition-colors px-6 py-3 rounded-lg font-medium" type="submit" name="createAccount">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-6">
+                        <p class="text-zinc-400">
+                            Already have an account?
+                            <a class="text-blue-500 hover:text-blue-400 transition-colors font-medium" href="/login">Login here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="w-80 bg-zinc-950 border-l border-zinc-800 p-6 overflow-y-auto">
+            <h3 class="text-xl font-semibold mb-6 border-b border-zinc-800 pb-2">Other Users</h3>
+            <div class="flex flex-col gap-4">
+                <% if(allUsers && allUsers.length > 0) { %>
+                    <% allUsers.forEach((val) => { %>
+                        <div class="flex gap-3 p-2 hover:text-zinc-800">
+                            <a class="text-blue-500 hover:text-blue-700 flex-1 user-link" href="/user/<%= val._id %>"><%= val.username || val._id %></a>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p class="text-sm text-zinc-400">No other users</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Prevent clicking on user links before login
+        document.querySelectorAll('.user-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Please login or create account first to view other users');
+            });
+        });
+    </script>
+</body>
+</html>
