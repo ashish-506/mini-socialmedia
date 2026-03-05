@@ -80,6 +80,8 @@
                 alert('Please login or create account first to view other users');
             });
         });
+        if(!<%= count.email %>) alert("email already exists");
+        if(!<%= count.username %>) alert("username not available");
     </script>
 </body>
 </html>

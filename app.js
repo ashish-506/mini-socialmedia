@@ -32,7 +32,8 @@ function isloggedin(req,res,next){
 
 app.get('/',async (req,res)=>{
     const allUsers = await userModel.find();
-    res.render("index",{allUsers});
+    const count = {email:true,username:true};
+    res.render("index",{allUsers,count});
 })
 
 app.get('/login',async (req,res)=>{
@@ -114,10 +115,12 @@ app.post('/post',isloggedin,async (req,res)=>{
 })
 app.post('/register',async (req,res)=>{
     const {email,password,username,name,age} = req.body;
-
+    const allUsers = await userModel.find();
+    const count = {email:true,username:true};
     const user = await userModel.findOne({email});
-    if(user) return res.status(500).send('User already exist!!');
-
+    if(user){ count.email = false; return res.status(500).render("index",{allUsers,count})};
+    const id = await userModel.findOne({username});
+    if(id){ count.username = false; return res.status(500).render("index",{allUsers,count})};
     bcrypt.genSalt(10,(err,salt)=>{
         bcrypt.hash(password,salt,async (err,hash)=>{
             const user = await userModel.create({
