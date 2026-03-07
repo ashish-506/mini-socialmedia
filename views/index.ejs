@@ -74,12 +74,6 @@
 
     <script>
         // Prevent clicking on user links before login
-        document.querySelectorAll('.user-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                alert('Please login or create account first to view other users');
-            });
-        });
         if(!<%= count.email %>) alert("email already exists");
         if(!<%= count.username %>) alert("username not available");
     </script>
