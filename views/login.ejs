@@ -62,12 +62,12 @@
 
     <script>
         // Prevent clicking on user links before login
-        document.querySelectorAll('.user-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                alert('Please login or create account first to view other users');
-            });
-        });
+        // document.querySelectorAll('.user-link').forEach(link => {
+        //     link.addEventListener('click', (e) => {
+        //         e.preventDefault();
+        //         alert('Please login or create account first to view other users');
+        //     });
+        // });
 
         if(!<%= count.valid %>) alert("wrong credentials");
     </script>

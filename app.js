@@ -24,10 +24,14 @@ app.use(express.urlencoded({extended:true}));
 
 function isloggedin(req,res,next){
     if(req.cookies.token==="") return res.redirect('/login');
-
-    const data = jwt.verify(req.cookies.token,process.env.jwtsecret);
-    req.user = data;
-    next();
+    try {
+        
+        const data = jwt.verify(req.cookies.token,process.env.jwtsecret);
+        req.user = data;
+        next();
+    } catch (error) {
+        return res.redirect('/login');
+    }
 }
 
 app.get('/',async (req,res)=>{
@@ -95,7 +99,7 @@ app.post('/update/:id',isloggedin,async (req,res)=>{
     res.redirect('/profile');
 })
 
-app.get('/user/:id',isloggedin,async (req,res)=>{
+app.get('/user/:id',async (req,res)=>{
     const allUsers = await userModel.find();
     const user = await userModel.findOne({_id:req.params.id}).populate('posts');
     const curruser = req.user;
